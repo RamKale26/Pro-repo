@@ -1,0 +1,10 @@
+.card {
+  border-radius: 15px;
+}
+.card h3 {
+  font-weight: bold;
+  color: #333;
+}
+button {
+  font-weight: bold;
+}

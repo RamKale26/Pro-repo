@@ -1,0 +1,96 @@
+.admin-dashboard {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.product-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.product-form input,
+.product-form textarea,
+.product-form button {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.product-form textarea {
+  grid-column: span 2;
+  resize: none;
+}
+
+.product-form button {
+  grid-column: span 2;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.product-form button:hover {
+  background: #0056b3;
+}
+
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.products-table th,
+.products-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.products-table th {
+  background: #f4f4f4;
+}
+
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.edit-btn {
+  background: #ffc107;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.edit-btn:hover {
+  background: #e0a800;
+}
+
+.delete-btn {
+  background: #dc3545;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+}
+
+.delete-btn:hover {
+  background: #b02a37;
+}

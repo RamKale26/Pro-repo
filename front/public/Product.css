@@ -1,0 +1,70 @@
+    .product-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  flex: 1;
+}
+
+.image-gallery img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.price {
+  font-size: 1.5rem;
+  color: #e60023;
+}
+
+.strike {
+  text-decoration: line-through;
+  color: gray;
+  margin-left: 10px;
+}
+
+.offer {
+  color: green;
+  margin-left: 10px;
+}
+
+.sizes .size-options button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.actions button {
+  margin: 10px 10px 10px 0;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-to-bag {
+  background-color: #ff3f6c;
+  color: white;
+  border: none;
+}
+
+.wishlist {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.delivery input {
+  margin-right: 10px;
+  padding: 5px;
+}

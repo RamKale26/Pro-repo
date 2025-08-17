@@ -1,0 +1,27 @@
+/* 
+.footer {
+  background-color: #222;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+} 
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.footer-links {
+  margin-top: 10px;
+}
+
+.footer-links a {
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: #ff9800;
+} */

@@ -1,0 +1,14 @@
+/* login.css */
+
+body {
+  background-color: #f8f9fa;
+}
+
+img {
+  object-fit: cover;
+  height: 160%;
+  width: 100%;
+}
+.main{
+  background-color: rgb(142, 142, 180);
+}
