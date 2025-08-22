@@ -18,7 +18,7 @@ class LoginPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login details:", this.state);
-    alert("Login attempt made!");
+    alert(" Wrong Email Or Pass please Register First !");
     this.setState({ name: "", password: "" });
   };
 

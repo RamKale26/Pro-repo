@@ -39,7 +39,7 @@ const ManageUsers = () => {
       <table className="table table-bordered mt-3">
         <thead className="table-dark">
           <tr>
-            <th>Sr. No.</th>
+            <th>Sr. No</th>
             <th>Name</th>
             <th>Email</th>
             <th>Password</th>
@@ -53,7 +53,7 @@ const ManageUsers = () => {
           {users.length > 0 ? (
             users.map((u, index) => (
               <tr key={u.id}>
-                <td>{index + 1}</td> {/* Sr. No. instead of ID */}
+                <td>{index + 1}</td> 
                 <td>{u.Name}</td>
                 <td>{u.Email}</td>
                 <td>{u.password}</td>

@@ -8,7 +8,7 @@ exports.AddUser = (Name, Email, password, Date, role) => {
         if (err) {
           reject(err);
         } else {
-          resolve({ message: "User Registered Successfully" });
+          resolve({ message: "Registered Successfully" });
         }
       }
     );

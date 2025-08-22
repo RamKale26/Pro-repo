@@ -48,10 +48,9 @@
   padding: 0 20px;
 }
 
-/* Hero Banner */
-.hero-banner-img {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-              url('https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+.banner {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  background-image: url("");    
   background-size: cover;
   background-position: center;
   height: 400px;
@@ -81,28 +80,7 @@
   margin-bottom: 25px;
 }
 
-.search-bar {
-  display: flex;
-  margin-bottom: 20px;
-}
 
-.search-bar input {
-  flex: 1;
-  padding: 12px 15px;
-  border: none;
-  border-radius: 25px 0 0 25px;
-  font-size: 1rem;
-}
-
-.search-bar button {
-  padding: 12px 20px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 0 25px 25px 0;
-  cursor: pointer;
-  font-weight: bold;
-}
 
 .delivery-info {
   display: flex;
@@ -178,6 +156,92 @@ footer {
 .footer-bottom p{
   color: white;
 }
+.img{
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+
+}
+/* .main{
+  background-image: url("");
+  height: 400px;
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+} */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-text {
+  color: white;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.banner-text h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.banner-text p {
+  font-size: 1.3rem;
+  margin: 10px 0;
+}
+
+.banner-text .btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+}
+/* --- Search Section --- */
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-section h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.search-input {
+  width: 60%;
+  max-width: 500px;
+  padding: 12px 15px;
+  border: 1px solid #0d0e0d;
+  border-radius: 30px;
+  outline: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #218838;
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
+}
+
+/* Small screens */
+@media (max-width: 768px) {
+  .search-input {
+    width: 90%;
+  }
+}
+
+
 
 
 
@@ -197,3 +261,5 @@ footer {
     gap: 10px;
   }
 }
+
+

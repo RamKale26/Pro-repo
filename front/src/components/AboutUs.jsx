@@ -18,7 +18,7 @@ class AboutUs extends Component {
           This application is built with modern web technologies to ensure a smooth and  
           responsive user experience.
         </p>
-        <h6> Manged by || Babar Tushar And Ramnath Kale</h6>
+        <h6> Manged by || Tushar Babar And Ramnath Kale</h6>
       </div>
     );
   }

@@ -28,7 +28,7 @@ class NavBar extends Component {
           <img
             src="https://t3.ftcdn.net/jpg/12/57/05/84/240_F_1257058412_n1kFO0OTGTwXe1vP4Fh7w7wKNSOL6CKF.jpg"
             alt="QuikCart Logo"
-            style={{ height: "50px", marginRight: "5px", width: "100px" }}
+            style={{ height: "60px", marginRight: "5px", width: "100px" }}
           />
           <h2 style={{ color: "red", margin: 0 }}>
             Quik<span style={{ color: "black" }}>Cart</span>
@@ -60,7 +60,7 @@ class NavBar extends Component {
               <NavLink className="nav-link fw-bold text-dark" to="/beauty"> BEAUTY </NavLink>
             </li>
             <li className="nav-item mx-2 bt">
-              <NavLink className="nav-link fw-bold text-dark" to="/groery"> GROCERY </NavLink>
+              <NavLink className="nav-link fw-bold text-dark"  to="/groery" data-toggle="tooltip" data-placement="top" title="Grocery Page"> GROCERY </NavLink>
             </li>
           </ul>
           <form

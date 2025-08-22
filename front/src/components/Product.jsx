@@ -12,7 +12,7 @@ class Product extends Component {
         price: "₹499",
         image: "https://image.hm.com/assets/hm/e4/89/e48924ece823f919263814643ee0aa14e5557bee.jpg?imwidth=768",
         //link: "/login",
-        link: "/",
+        link: "/Men",
       },
       {
         id: 2,
@@ -98,7 +98,7 @@ class Product extends Component {
             <p>Shop the latest trends at unbeatable prices</p>
             <div className="cta-buttons">
               <Link to="/men" className="btn btn-primary">Shop Now</Link>
-              <Link to="sale" className="btn btn-outline-light">View Sale</Link>
+              <Link to="/" className="btn btn-outline-light">View Sale</Link>
             </div>
             <div className="hero-stats">
               <div className="stat-item">

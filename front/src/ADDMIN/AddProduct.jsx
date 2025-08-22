@@ -1,134 +1,82 @@
 import React, { Component } from "react";
+import ProdService from "../Services/Prodservice";
 import "../style/AddProd.css";
 
 class AddProductForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      Name: "",
-      description: "",
-      price: "",
-      category: "",
-      image: "",
-    };
-  }
+  state = { Name: "", description: "", price: "", category_id: "", image_url: "" };
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+  handleChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("📦 Product Added:", this.state);
+    const { Name, description, price, category_id, image_url } = this.state;
 
-    // You can connect to backend API here
-    // Example: axios.post("http://localhost:3000/products", this.state)
+    const payload = {
+      Name,
+      description,
+      price: Number(price),
+      category_id: Number(category_id),
+      image_url
+    };
 
-    alert("✅ Product added successfully!");
-    this.setState({
-      Name: "",
-      description: "",
-      price: "",
-      category:"",
-      image: "",
-    });
+    try {
+      const res = await ProdService.addProduct(payload);
+      console.log(" Added:", res.data);
+      alert("Product added successfully!");
+      this.setState({ Name: "", description: "", price: "", category_id: "", image_url: "" });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to add product");
+    }
   };
 
   render() {
-    const { Name, description, price, category, image } = this.state;
+    const { Name, description, price, category_id, image_url } = this.state;
 
     return (
       <div className="container mt-5">
         <div className="card shadow p-4">
           <h3 className="mb-4 text-center">Add New Product</h3>
           <form onSubmit={this.handleSubmit}>
-            
-            {/* Product Name */}
             <div className="mb-3">
               <label className="form-label">Product Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="Name"
-                value={Name}
-                onChange={this.handleChange}
-                required
-              />
+              <input className="form-control" name="Name" value={Name} onChange={this.handleChange} required />
             </div>
 
-            {/* Category */}
             <div className="mb-3">
               <label className="form-label">Category</label>
-              <select
-                className="form-select"
-                name="category"
-                value={description}
-                onChange={this.handleChange}
-                required
-              >
+              <select className="form-select" name="category_id" value={category_id} onChange={this.handleChange} required>
                 <option value="">-- Select Category --</option>
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-                <option value="Kids">Kids</option>
-                <option value="Beauty">Beauty</option>
-                <option value="Grocery">Grocery</option>
+                <option value="1">Men</option>
+                <option value="2">Women</option>
+                <option value="3">Kids</option>
+                <option value="4">Beauty</option>
+                <option value="5">Grocery</option>
               </select>
             </div>
 
-            {/* Price */}
             <div className="mb-3">
               <label className="form-label">Price (₹)</label>
-              <input
-                type="number"
-                className="form-control"
-                name="price"
-                value={price}
-                onChange={this.handleChange}
-                required
-              />
+              <input type="number" className="form-control" name="price" value={price} min="0" onChange={this.handleChange} required />
             </div>
 
-            {/* Description */}
             <div className="mb-3">
               <label className="form-label">Description</label>
-              <textarea
-                className="form-control"
-                rows="3"
-                name=""
-                value={category}
-                onChange={this.handleChange}
-                required
-              ></textarea>
+              <textarea className="form-control" rows="3" name="description" value={description} onChange={this.handleChange} required />
             </div>
 
-            {/* Image URL */}
             <div className="mb-3">
               <label className="form-label">Image URL</label>
-              <input
-                type="file"
-                className="form-control"
-                name="image"
-                value={image}
-                onChange={this.handleChange}
-                required
-              />
+              <input type="url" className="form-control" name="image_url" value={image_url} onChange={this.handleChange} placeholder="https://..." required />
             </div>
 
-            {/* Preview */}
-            {image && (
-              <div className="mb-3 text-center">
-                <img
-                  src={image}
-                  alt="Preview"
-                  style={{ width: "120px", borderRadius: "10px" }}
-                />
+            {image_url && (
+              <div className="mb-3 text-center img">
+                <img src={image_url} alt="Preview" style={{ width: 120, borderRadius: 10, }} />
               </div>
-            )};
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary w-100">
-                Add Product
-              </button>
-            </div>
+            )}
+
+            <button className="btn btn-primary w-100">Add Product</button>
           </form>
         </div>
       </div>

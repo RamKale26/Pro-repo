@@ -3,18 +3,53 @@ const { name } = require("ejs");
 let db=require("../../db.js");
 
 
-exports.addProduct = (name, description, price, image_url, category_id) =>{
-    return new Promise((resolve, reject)=>{
-        db.query("insert into products (name, description, price, image_url, category_id) values (?, ?, ?, ?, ?)",[name, description, price, image_url, category_id],(err, result) => {
-            if(err){
-                reject(err);
+exports.addProduct = (Name, description, price, image_url, category_id) => {
+    return new Promise((resolve, reject) => {
+        db.query(
+            "INSERT INTO products (Name, description, price, image_url, category_id) VALUES (?, ?, ?, ?, ?)",
+            [Name, description, price, image_url, category_id],
+            (err, result) => {
+                if (err) {
+                    console.log("❌ SQL Error:", err.sqlMessage);
+                    reject(err.sqlMessage);
+                } else {
+                    resolve("✅ Product added successfully");
+                }
             }
-            else{
-                resolve("Product added successfully");
+        );
+    });
+};
+
+    exports.getProductsByCategory = (category_id) => {
+    return new Promise((resolve, reject) => {
+        db.query(
+        "SELECT * FROM products WHERE category_id = ?",
+        [category_id],
+        (err, results) => {
+            if (err) {
+            console.log("❌ SQL Error:", err.sqlMessage);
+            reject(err.sqlMessage);
+            } else {
+            resolve(results);
             }
-        })
-    });
-}
+        }
+        );
+    });
+    };  
+
+
+//cart products
+exports.findProductById = (id) => {
+  return new Promise((resolve, reject) => {
+    db.query("SELECT * FROM products WHERE product_id = ?", [id], (err, results) => {
+      if (err) reject(err.sqlMessage);
+      else resolve(results[0]); // return single product
+    });
+  });
+};
+
+
+
 
 exports.viewAllProduct = () => {
     return new Promise((resolve, reject) => {

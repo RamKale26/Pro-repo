@@ -35,7 +35,7 @@ let AdminLogin = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="Email" placeholder="Enter Email" value={Email}
           onChange={(e) => setEmail(e.target.value)}
-          autoComplete="off"
+         // autoComplete="off"
           required />
 
         <input type="password" name="password"  placeholder="Enter Password" value={password}

@@ -8,3 +8,9 @@
 button {
   font-weight: bold;
 }
+.img{
+  width:"auto";
+  height: 100px;
+  object-fit: cover;
+}
+

@@ -1,25 +1,45 @@
 .card-img-top {
   object-fit: cover;
-  height: 250px;
+  height: 100px;
 
 }
 
-.card:hover {
+/* .card:hover {
   transform: translateY(-5px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
-}
+} */
 
 
-.card-img-top {
+/* .card-img-top {
   transition: transform 0.3s ease;
 }
 
 .card:hover .card-img-top {
   transform: scale(1.05);
+} */
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
 
+/* Image hover effect */
+.card img {
+  transition: transform 0.4s ease;
+  object-fit: cover ;
+}
+
+.card:hover img {
+  transform: scale(1.08);
+}
 .btn-primary:hover {
   background-color: #0056b3;
   border-color: #004c99;
@@ -252,3 +272,54 @@ footer {
   color: white;
 }
 
+.grocery-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.grocery-card .card-body {
+  flex-grow: 1;
+}
+
+/* Hover effect */
+/* .grocery-card:hover {
+  transform: translateY(-1px) scale( 0.05);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+} */
+
+
+.card-img-top {
+  height: 160px;
+  object-fit: cover;
+}
+
+
+.grocery-card .btn {
+  width: 100%;
+  text-align: center;
+}
+/* .main{
+  background-image: url("https://cdn.pixabay.com/photo/2021/01/24/20/21/cloud-5946381_640.jpg"); 
+  height: 400px;
+  width: 100%;
+  background-size: cover; 
+} */
+
+
+
+
+
+/* Responsive spacing */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 180px;
+  }
+}
+
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 150px;
+  }
+}

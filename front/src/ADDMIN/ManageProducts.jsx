@@ -22,8 +22,12 @@ const ManageProducts = () => {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Price (₹)</th>
-            <th>Action</th>
+            <th>Category (₹)</th>
+            <th>price</th>
+            <th>Description</th>
+            <th>Image_url</th>
+            <th>Delete</th>
+            <th>Update</th>
           </tr>
         </thead>
         <tbody>
@@ -31,11 +35,21 @@ const ManageProducts = () => {
             <tr key={p.id}>
               <td>{p.id}</td>
               <td>{p.name}</td>
-              <td>{p.price}</td>
+              <td>{p.Category}</td>
+              <td>price</td>
+              <td>description</td>
+              <td>Image_url</td>
               <td>
                 <button className="btn btn-danger btn-sm" onClick={() => deleteProduct(p.id)}>
                   Delete
                 </button>
+                
+              </td>
+               <td>
+                <button className="btn btn-warning btn-sm" onClick={() => deleteProduct(p.id)}>
+                  Update
+                </button>
+                
               </td>
             </tr>
           ))}
