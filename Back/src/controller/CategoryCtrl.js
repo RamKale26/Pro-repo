@@ -50,7 +50,7 @@ let CategoryModel = require("../models/CategoryModel");
 
 // Add Category
 exports.Addcategory = (req, res) => {
-  const { Name } = req.body;
+  const Name = req.body?.Name || req.body?.category_name;
   console.log("Addcategory called with:", Name);
 
   if (!Name) {
@@ -77,14 +77,15 @@ exports.viewAllCategory = (req, res) => {
 
 // Update
 exports.UpdateCategory = (req, res) => {
-  const { category_name, category_id } = req.body;
-  console.log("UpdateCategory called with:", category_name, category_id);
+  const id = req.body?.category_id || req.body?.id;
+  const name = req.body?.category_name || req.body?.Name || req.body?.name;
+  console.log("UpdateCategory called with:", name, id);
 
-  if (!category_id) {
+  if (!id) {
     return res.status(400).json({ error: "category_id is required" });
   }
 
-  CategoryModel.UpdateCategory(category_name, category_id)
+  CategoryModel.UpdateCategory(name, id)
     .then((result) => res.json(result))
     .catch((err) => {
       console.error("UpdateCategory error:", err);
@@ -94,14 +95,14 @@ exports.UpdateCategory = (req, res) => {
 
 // Delete
 exports.DeleteCategory = (req, res) => {
-  const { category_id } = req.body;
-  console.log("DeleteCategory called with:", category_id);
+  const id = req.body?.category_id || req.body?.id;
+  console.log("DeleteCategory called with:", id);
 
-  if (!category_id) {
+  if (!id) {
     return res.status(400).json({ error: "category_id is required" });
   }
 
-  CategoryModel.DeleteCategory(category_id)
+  CategoryModel.DeleteCategory(id)
     .then((result) => res.json(result))
     .catch((err) => {
       console.error("DeleteCategory error:", err);

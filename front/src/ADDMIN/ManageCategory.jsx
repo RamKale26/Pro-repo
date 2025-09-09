@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Prodservice from "../Services/Prodservice";
+import { Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Snackbar, Alert, Stack } from "@mui/material";
 
 function ManageCategory() {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
-  const [showList, setShowList] = useState(true);
+  // List is always visible now. Use button to refresh.
+  const [snack, setSnack] = useState({ open: false, message: "", severity: "success" });
 
   // Fetch all categories
   const fetchCategories = () => {
     Prodservice.getAllCategories()
       .then((res) => {
-        setCategories(res.data);
+        const rows = Array.isArray(res.data) ? res.data : (res.data?.data || []);
+        setCategories(rows);
       })
       .catch((err) => console.error("Error fetching categories:", err));
   };
@@ -28,15 +31,13 @@ function ManageCategory() {
     Prodservice.addCategory({ Name: newCategory })
       .then((res) => {
         console.log("Category added:", res.data);
-        alert("Category added successfully");
+        setSnack({ open: true, message: "Category added successfully", severity: "success" });
         setNewCategory("");
-        if (showList) {
-          fetchCategories();
-        }
+        fetchCategories();
       })
       .catch((err) => {
         console.error(err);
-        alert("Failed to add category");
+        setSnack({ open: true, message: "Failed to add category", severity: "error" });
       });
   };
 
@@ -48,16 +49,14 @@ function ManageCategory() {
     Prodservice.updateCategory({ category_name: editName, category_id: id })
       .then((res) => {
         console.log("Category updated:", res.data);
-        alert("Category updated successfully");
+        setSnack({ open: true, message: "Category updated successfully", severity: "success" });
         setEditId(null);
         setEditName("");
-        if (showList) {
-          fetchCategories();
-        }
+        fetchCategories();
       })
       .catch((err) => {
         console.error(err);
-        alert("Failed to update category");
+        setSnack({ open: true, message: "Failed to update category", severity: "error" });
       });
   };
 
@@ -69,85 +68,72 @@ function ManageCategory() {
     Prodservice.deleteCategory({ category_id: id })
       .then((res) => {
         console.log("Category deleted:", res.data);
-        alert("Category deleted successfully");
-        if (showList) {
-          fetchCategories();
-        }
+        setSnack({ open: true, message: "Category deleted successfully", severity: "success" });
+        fetchCategories();
       })
       .catch((err) => {
         console.error(err);
-        alert("Failed to delete category");
+        setSnack({ open: true, message: "Failed to delete category", severity: "error" });
       });
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: 800, margin: "0 auto" }}>
+    <div style={{ padding: "20px", maxWidth: 900, margin: "0 auto" }}>
       <h2 style={{ marginBottom: 16 }}>Manage Categories</h2>
 
-      {/* Add Category */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-        <input
-          type="text"
+      <Stack direction="row" spacing={1} style={{ marginBottom: 16 }}>
+        <TextField
+          label="New Category"
           placeholder="Enter Category Name"
           value={newCategory}
           onChange={(e) => setNewCategory(e.target.value)}
-          style={{ flex: 1, padding: 8 }}
+          fullWidth
+          size="small"
         />
-        <button onClick={handleAddCategory} style={{ padding: "8px 12px" }}>Add</button>
-      </div>
+        <Button variant="contained" color="primary" onClick={handleAddCategory}>
+          Add
+        </Button>
+        <Button variant="outlined" onClick={fetchCategories}>View All Categories</Button>
+      </Stack>
 
-      {/* Show Categories Toggle */}
-      <div style={{ marginBottom: 16 }}>
-        <button
-          onClick={() => setShowList((prev) => !prev)}
-          style={{ padding: "8px 12px" }}
-        >
-          {showList ? "Hide Categories" : "Show Categories"}
-        </button>
-        {showList && (
-          <button
-            onClick={fetchCategories}
-            style={{ padding: "8px 12px", marginLeft: 8 }}
-          >
-            Refresh
-          </button>
-        )}
-      </div>
-
-      {/* Category List */}
-      {showList && (
-        <div style={{ overflowX: "auto" }}>
-          <table border="1" cellPadding="8" cellSpacing="0" style={{ width: "100%" }}>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Category Name</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {categories.length > 0 ? (
-                categories.map((cat) => (
-                  <tr key={cat.id}>
-                    <td>{cat.id}</td>
-                    <td>
-                      {editId === cat.id ? (
-                        <input
-                          type="text"
+      <TableContainer component={Paper}>
+        <Table size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Category Name</TableCell>
+              <TableCell align="right">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {categories.length > 0 ? (
+              categories.map((cat) => {
+                const catId = cat.id ?? cat.category_id;
+                const catName = cat.Name ?? cat.name ?? cat.category_name;
+                const isEditing = editId === catId;
+                return (
+                  <TableRow key={catId}>
+                    <TableCell>{catId}</TableCell>
+                    <TableCell>
+                      {isEditing ? (
+                        <TextField
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
+                          size="small"
                         />
                       ) : (
-                        cat.Name
+                        catName
                       )}
-                    </td>
-                    <td>
-                      {editId === cat.id ? (
+                    </TableCell>
+                    <TableCell align="right">
+                      {isEditing ? (
                         <>
-                          <button onClick={() => handleUpdateCategory(cat.id)}>
+                          <Button size="small" variant="contained" onClick={() => handleUpdateCategory(catId)}>
                             Save
-                          </button>
-                          <button
+                          </Button>
+                          <Button
+                            size="small"
+                            variant="text"
                             onClick={() => {
                               setEditId(null);
                               setEditName("");
@@ -155,35 +141,48 @@ function ManageCategory() {
                             style={{ marginLeft: 8 }}
                           >
                             Cancel
-                          </button>
+                          </Button>
                         </>
                       ) : (
                         <>
-                          <button
+                          <Button
+                            size="small"
+                            variant="outlined"
                             onClick={() => {
-                              setEditId(cat.id);
-                              setEditName(cat.Name);
+                              setEditId(catId);
+                              setEditName(catName || "");
                             }}
                           >
                             Edit
-                          </button>
-                          <button onClick={() => handleDeleteCategory(cat.id)} style={{ marginLeft: 8 }}>
+                          </Button>
+                          <Button size="small" color="error" variant="outlined" onClick={() => handleDeleteCategory(catId)} style={{ marginLeft: 8 }}>
                             Delete
-                          </button>
+                          </Button>
                         </>
                       )}
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3">No categories found</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3}>No categories found</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
+      <Snackbar
+        open={snack.open}
+        autoHideDuration={2500}
+        onClose={() => setSnack((s) => ({ ...s, open: false }))}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity={snack.severity} variant="filled" onClose={() => setSnack((s) => ({ ...s, open: false }))}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
