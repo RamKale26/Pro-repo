@@ -165,50 +165,69 @@ class LoginPage extends Component {
     }
 
     return (
-      <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light mt-1">
-        <div className="card shadow border-0" style={{ maxWidth: 420, width: "100%" }}>
-          <div className="card-body p-4">
-          <div className="text-center mb-3">
-            <div className="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center" style={{ width: 64, height: 64 }}>
-              <i className="bi bi-person-circle text-primary" style={{ fontSize: 28 }}></i>
-            </div>
+      <div className="container-fluid min-vh-100 bg-light">
+        <div className="row align-items-center min-vh-100">
+          {/* Photo / Illustration Section */}
+          <div className="col-lg-6 d-none d-lg-block p-0">
+            <div
+              className="h-100 w-100"
+              style={{
+                backgroundImage: "url(/shubhisha-fashion-women-s.webp)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                minHeight: "50vh"
+              }}
+              aria-label="Login illustration"
+            />
           </div>
-          <h3 className="mb-3 text-center">Welcome Back</h3>
-          {this.state.success && (
-            <div className="alert alert-success">{this.state.success}</div>
-          )}
-          {this.state.error && (
-            <div className="alert alert-danger">{this.state.error}</div>
-          )}
 
-          <form onSubmit={this.handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input type="email" className="form-control" placeholder="you@example.com" name="Email" value={this.state.Email} onChange={this.handleChange} />
-            </div>
+          {/* Form Section */}
+          <div className="col-lg-6 d-flex justify-content-center py-4 py-lg-0">
+            <div className="card shadow border-0" style={{ maxWidth: 420, width: "100%" }}>
+              <div className="card-body p-4">
+                <div className="text-center mb-3">
+                  <div className="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center" style={{ width: 64, height: 64 }}>
+                    <i className="bi bi-person-circle text-primary" style={{ fontSize: 28 }}></i>
+                  </div>
+                </div>
+                <h3 className="mb-3 text-center">Welcome Back</h3>
+                {this.state.success && (
+                  <div className="alert alert-success">{this.state.success}</div>
+                )}
+                {this.state.error && (
+                  <div className="alert alert-danger">{this.state.error}</div>
+                )}
 
-            <div className="mb-3">
-              <label className="form-label">Password</label>
-              <input type="password" className="form-control" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
-            </div>
+                <form onSubmit={this.handleSubmit}>
+                  <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input type="email" className="form-control" placeholder="you@example.com" name="Email" value={this.state.Email} onChange={this.handleChange} />
+                  </div>
 
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" id="rememberUser" />
-                <label className="form-check-label" htmlFor="rememberUser">Remember me</label>
+                  <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input type="password" className="form-control" placeholder="Enter your password" name="password" value={this.state.password} onChange={this.handleChange} />
+                  </div>
+
+                  <div className="d-flex justify-content-between align-items-center mb-3">
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" id="rememberUser" />
+                      <label className="form-check-label" htmlFor="rememberUser">Remember me</label>
+                    </div>
+                    <a href="#" className="small text-decoration-none">Forgot password?</a>
+                  </div>
+
+                  <button type="submit" className="btn btn-primary w-100">Log In</button>
+
+                  <p className="text-center mb-0">
+                    Don't have an account?{" "}
+                    <Link to="/reg" className="text-decoration-none">
+                      Register
+                    </Link>
+                  </p>
+                </form>
               </div>
-              <a href="#" className="small text-decoration-none">Forgot password?</a>
             </div>
-
-            <button type="submit" className="btn btn-primary w-100">Log In</button>
-
-            <p className="text-center mb-0">
-              Don't have an account?{" "}
-              <Link to="/reg" className="text-decoration-none">
-                Register
-              </Link>
-            </p>
-          </form>
           </div>
         </div>
       </div>
