@@ -96,7 +96,7 @@ import React, { Component } from "react";
   import AboutUs from "./components/AboutUs";
   import Grocery from "./components/Grocery";
   import AdminLogin from "./components/AdminLogin";
-  import AddCategory from "./components/AddCategory";
+  import ManageCategory from "./ADDMIN/ManageCategory";
   import AdminDash from "./components/AdminDash";
   import ProductDetail from "./components/ProductDetail";
   import UserDashboard from "./components/UserDashboard"
@@ -133,7 +133,7 @@ import React, { Component } from "react";
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/reg" element={<RegisterForm />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/addcat" element={<AddCategory />} />
+          <Route path="/addcat" element={<ManageCategory />} />
           <Route path="/product/:id" element={<ProductDetail />} />
 
           {/* <Route path="/wishlist" element={<Wishlist />} /> */}
