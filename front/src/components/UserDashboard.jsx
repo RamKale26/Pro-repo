@@ -369,6 +369,8 @@ function UserDashboard() {
   const [passForm, setPassForm] = useState({ password: "", confirm: "" });
   const [message, setMessage] = useState("");
   const [ordersWithProd, setOrdersWithProd] = useState([]);
+  const [showProfileInline, setShowProfileInline] = useState(false);
+  const [showSecurityInline, setShowSecurityInline] = useState(false);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -484,6 +486,7 @@ function UserDashboard() {
 
       {/* Overview */}
       {activeTab === "overview" && (
+        <>
         <Row className="g-3">
           <Col lg={6}>
             <Card className="border-0 shadow-sm h-100">
@@ -502,21 +505,102 @@ function UserDashboard() {
                     <div className="fw-semibold">{new Date(user.Date).toLocaleDateString()}</div>
                   </div>
                 )}
-                <div className="d-flex gap-2 mt-2">
-                  <Button size="sm" onClick={() => setActiveTab("profile")}>
-                    <FaPen className="me-1" /> Edit Profile
+                <div className="d-flex flex-wrap gap-2 mt-2">
+                  <Button size="sm" onClick={() => setShowProfileInline((v) => !v)}>
+                    <FaPen className="me-1" /> {showProfileInline ? "Hide Update Profile" : "Show Update Profile"}
                   </Button>
-                  <Button size="sm" variant="outline-secondary" onClick={() => setActiveTab("security")}>
-                    <FaKey className="me-1" /> Change Password
+                  <Button size="sm" variant="outline-secondary" onClick={() => setShowSecurityInline((v) => !v)}>
+                    <FaKey className="me-1" /> {showSecurityInline ? "Hide Change Password" : "Show Change Password"}
                   </Button>
                   <Button size="sm" variant="outline-primary" onClick={() => setActiveTab("orders")}>
-                    <FaCartShopping className="me-1" /> My Orders
+                    <FaCartShopping className="me-1" /> View Orders
                   </Button>
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        {/* Inline sections like Show/Hide */}
+        {showProfileInline && (
+          <Row className="justify-content-center mt-3">
+            <Col lg={8}>
+              <Card className="border-0 shadow-sm">
+                <Card.Body className="p-4">
+                  <h5 className="mb-3">Edit Profile</h5>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label">Name</label>
+                      <input className="form-control" value={form.Name} onChange={(e) => setForm({ ...form, Name: e.target.value })} />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Email</label>
+                      <input type="email" className="form-control" value={form.Email} onChange={(e) => setForm({ ...form, Email: e.target.value })} />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Date of Birth</label>
+                      <input type="date" className="form-control" value={form.Date || ""} onChange={(e) => setForm({ ...form, Date: e.target.value })} />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Role</label>
+                      <select className="form-select" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })}>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-end gap-2 mt-3">
+                    <Button size="sm" variant="outline-secondary" onClick={() => setShowProfileInline(false)}>Hide Update Profile</Button>
+                    <Button size="sm" onClick={() => {
+                      if (!user?.id) return;
+                      UserService.updateUserProfile({ id: user.id, Name: form.Name, Email: form.Email, Date: form.Date, role: form.role })
+                        .then(() => {
+                          const updatedUser = { ...user, ...form };
+                          setUser(updatedUser);
+                          localStorage.setItem("user", JSON.stringify(updatedUser));
+                          setMessage("✅ Profile updated successfully!");
+                          setShowProfileInline(false);
+                        })
+                        .catch(() => setMessage("❌ Failed to update profile."));
+                    }}>Save Changes</Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        )}
+        {showSecurityInline && (
+          <Row className="justify-content-center mt-3">
+            <Col lg={8}>
+              <Card className="border-0 shadow-sm">
+                <Card.Body className="p-4">
+                  <h5 className="mb-3">Change Password</h5>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <label className="form-label">New Password</label>
+                      <input type="password" className="form-control" value={passForm.password} onChange={(e) => setPassForm({ ...passForm, password: e.target.value })} />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label">Confirm Password</label>
+                      <input type="password" className="form-control" value={passForm.confirm} onChange={(e) => setPassForm({ ...passForm, confirm: e.target.value })} />
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-end gap-2 mt-3">
+                    <Button size="sm" variant="outline-secondary" onClick={() => setShowSecurityInline(false)}>Hide Change Password</Button>
+                    <Button size="sm" onClick={() => {
+                      if (!user?.id) return;
+                      if (!/^\d{6}$/.test(passForm.password)) { setMessage("⚠️ Password must be exactly 6 digits."); return; }
+                      if (passForm.password !== passForm.confirm) { setMessage("⚠️ Passwords do not match."); return; }
+                      UserService.changeUserPassword(user.id, passForm.password)
+                        .then(() => { setMessage("✅ Password updated successfully!"); setShowSecurityInline(false); setPassForm({ password: "", confirm: "" }); })
+                        .catch(() => setMessage("❌ Failed to update password."));
+                    }}>Update Password</Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        )}
+        </>
       )}
 
       {/* Profile */}
