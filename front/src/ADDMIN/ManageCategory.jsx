@@ -6,7 +6,7 @@ function ManageCategory() {
   const [newCategory, setNewCategory] = useState("");
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
-  const [showList, setShowList] = useState(false);
+  const [showList, setShowList] = useState(true);
 
   // Fetch all categories
   const fetchCategories = () => {
@@ -18,10 +18,8 @@ function ManageCategory() {
   };
 
   useEffect(() => {
-    if (showList) {
-      fetchCategories();
-    }
-  }, [showList]);
+    fetchCategories();
+  }, []);
 
   // Add Category
   const handleAddCategory = () => {
