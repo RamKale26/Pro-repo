@@ -1,0 +1,148 @@
+/* Hero Banner */
+.hero-banner-two {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 50px 0;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-subtitle {
+  color: #ff4d4d;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.hero-text h1 {
+  font-size: 38px;
+  font-weight: 700;
+  margin: 15px 0;
+}
+
+.hero-text p {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+  object-fit: cover;
+}
+
+/* About Section */
+.about-section {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin: 80px 0;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 15px;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-text h2 {
+  font-size: 32px;
+  margin: 15px 0;
+}
+
+.section-subtitle {
+  color: #ff4d4d;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+/* Products */
+.section-title {
+  font-weight: bold;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card img {
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Sale Banner */
+.sale-banner {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(to right, #c5e0e4, #1de9df);
+  color: rgb(12, 7, 7);
+  
+}
+
+.sale-content h2 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background: #222;
+  color: #ccc;
+  padding: 50px 20px;
+  margin-top: 50px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.footer-section h3 {
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+
+.footer-section ul li a {
+  color: #ccc;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.footer-section ul li a:hover {
+  color: #ff4d4d;
+}
+
+.social-icons a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 14px;
+}
