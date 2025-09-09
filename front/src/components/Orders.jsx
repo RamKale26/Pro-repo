@@ -28,7 +28,7 @@ function Orders() {
       {orders.length === 0 ? (
         <p>No orders found!</p>
       ) : (
-        <table className="table table-bordered text-center">
+        <table className="table table-bordered align-middle">
           <thead className="table-dark">
             <tr>
               <th>Order ID</th>
@@ -41,17 +41,36 @@ function Orders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((o) => (
-              <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.product_id}</td>
-                <td>-</td>
-                <td>{o.address}</td>
-                <td>{o.payment_method}</td>
-                <td>{o.status}</td>
-                <td>{new Date(o.created_at).toLocaleString()}</td>
-              </tr>
-            ))}
+            {orders.map((o) => {
+              const name = o.product_name || o.Name || `#${o.product_id}`;
+              const image = o.product_image_url || o.image_url;
+              const price = o.product_price || o.price || "-";
+              return (
+                <tr key={o.id}>
+                  <td className="text-center">{o.id}</td>
+                  <td>
+                    <div className="d-flex align-items-center" style={{ gap: 12 }}>
+                      {image ? (
+                        <img src={image} alt={name} style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 6, border: "1px solid #ddd" }} />
+                      ) : (
+                        <div style={{ width: 56, height: 56, background: "#f0f0f0", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #ddd" }}>
+                          <span className="text-muted">No Image</span>
+                        </div>
+                      )}
+                      <div>
+                        <div className="fw-semibold">{name}</div>
+                        <div className="text-muted small">Product ID: {o.product_id}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="text-nowrap">{price !== "-" ? `₹ ${price}` : "-"}</td>
+                  <td>{o.address}</td>
+                  <td>{o.payment_method}</td>
+                  <td>{o.status}</td>
+                  <td>{new Date(o.created_at).toLocaleString()}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       )}
