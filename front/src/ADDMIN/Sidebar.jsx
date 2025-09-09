@@ -23,7 +23,7 @@ const Sidebar = ({ onSelect }) => {
           <span className="nav-link text-white"><FaPlus /> Add Product</span>
         </li>
         <li className="nav-item mb-2" onClick={() => onSelect("categories")}>
-          <span className="nav-link text-white"><FaPlus /> Add Category</span>
+          <span className="nav-link text-white"><FaPlus /> Manage Categories</span>
         </li>
         <li className="nav-item">
           <NavLink
