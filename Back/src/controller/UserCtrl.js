@@ -271,31 +271,32 @@ const EXPIRES_IN = process.env.JWT_EXPIRES;
 
 
 
-//add jwt token by users
-exports.loginuser = (req, res) => {
+// Secure user login with bcrypt compare
+exports.loginuser = async (req, res) => {
   const { Email, password } = req.body;
-  UserModel.loginUserprofile(Email, password)
-    .then((users) => {
-      if (users.length > 0) {
-        const jwt = require("jsonwebtoken");
-        const token = jwt.sign(
-          { id: users[0].id, role: users[0].role },
-          process.env.JWT_SECRET,
-          { expiresIn: process.env.JWT_EXPIRES || "1h"}
-        );
-
-        res.status(200).json({
-          message: "login success",
-          user: users[0],
-          token: token, // 👈 send token also
-        });
-      } else {
-        res.status(401).json({ message: "Invalid user email or password" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+  try {
+    const users = await UserModel.loginUserprofile(Email);
+    if (!users || users.length === 0) {
+      return res.status(401).json({ message: "Invalid user email or password" });
+    }
+    const dbUser = users[0];
+    const isMatch = await bcrypt.compare(password, dbUser.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid user email or password" });
+    }
+    const jwt = require("jsonwebtoken");
+    const token = jwt.sign(
+      { id: dbUser.id, role: dbUser.role },
+      process.env.JWT_SECRET || "mysecretkey",
+      { expiresIn: process.env.JWT_EXPIRES || "1h" }
+    );
+    // Hide password
+    const safeUser = { ...dbUser };
+    delete safeUser.password;
+    res.status(200).json({ message: "login success", user: safeUser, token });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 
