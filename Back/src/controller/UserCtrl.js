@@ -271,31 +271,32 @@ const EXPIRES_IN = process.env.JWT_EXPIRES;
 
 
 
-//add jwt token by users
-exports.loginuser = (req, res) => {
+//add jwt token by users (with bcrypt password verification)
+exports.loginuser = async (req, res) => {
   const { Email, password } = req.body;
-  UserModel.loginUserprofile(Email, password)
-    .then((users) => {
-      if (users.length > 0) {
-        const jwt = require("jsonwebtoken");
-        const token = jwt.sign(
-          { id: users[0].id, role: users[0].role },
-          process.env.JWT_SECRET,
-          { expiresIn: process.env.JWT_EXPIRES || "1h"}
-        );
+  try {
+    const users = await UserModel.loginUserprofile(Email);
+    if (users.length === 0) {
+      return res.status(401).json({ message: "Invalid user email or password" });
+    }
 
-        res.status(200).json({
-          message: "login success",
-          user: users[0],
-          token: token, // 👈 send token also
-        });
-      } else {
-        res.status(401).json({ message: "Invalid user email or password" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
-    });
+    const user = users[0];
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid user email or password" });
+    }
+
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES || "1h" }
+    );
+
+    const safeUser = { id: user.id, Name: user.Name, Email: user.Email, role: user.role };
+    return res.status(200).json({ message: "login success", user: safeUser, token });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 };
 
 
